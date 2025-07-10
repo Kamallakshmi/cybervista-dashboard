@@ -7,7 +7,7 @@
     "client": "npm run dev --prefix cyber-vista-ts",
     "server": "nodemon backend/index -ignore client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm install && npm install --prefix cyber-vista-ts && npm run build --prefix cyber-vista-ts",
+    "build": "npm install && npm install --include=dev --prefix cyber-vista-ts && npm run build --prefix cyber-vista-ts && npm prune",
     "start": "npm run server"
   },
   "keywords": [],
