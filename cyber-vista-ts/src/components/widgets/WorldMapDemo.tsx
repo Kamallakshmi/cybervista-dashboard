@@ -15,7 +15,7 @@ export function WorldMapDemo() {
   const countryCoords: Record<string, { lat: number; lng: number }> = {
     china: { lat: 35.8617, lng: 104.1954 },
     russia: { lat: 61.524, lng: 105.3188 },
-    india: { lat: 20.5937, lng: 78.9629 },
+    india: { lat: 12.9716, lng: 77.5946 },
     germany: { lat: 51.1657, lng: 10.4515 },
     pakistan: { lat: 30.3753, lng: 69.3451 },
   };
@@ -58,11 +58,11 @@ export function WorldMapDemo() {
         if (!coords) return null;
 
         return {
-          name: `${country.charAt(0).toUpperCase() + country.slice(1)} (${
-            d.hour
-          }h, ${d.day}d)`,
+          name: country.charAt(0).toUpperCase() + country.slice(1), // JUST name
           lat: coords.lat,
           lng: coords.lng,
+          hour: d.hour,
+          day: d.day,
         };
       })
       .filter(Boolean) || [];

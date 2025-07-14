@@ -206,21 +206,22 @@ export function WorldMap({
               fontWeight="bold"
               textAnchor="start"
             >
-              {/* Country name - font size 10 */}
+              {/* Line 1: Country name */}
               {label.name && (
-                <tspan fontSize="9" dy="0">
+                <tspan fontSize="10" dy="0">
                   {label.name}
                 </tspan>
               )}
 
-              {/* Hour and Day - font size 8 */}
-              {label.hour && label.day && (
+              {/* Line 2: Hours and Days */}
+              {label.hour != null && label.day != null && (
                 <tspan
                   fontSize="8"
-                  dy="10"
+                  dy="12"
+                  dx="-50" // shift back slightly if needed
                   fill={theme === "dark" ? "#cccccc" : "#555"}
                 >
-                  ({label.hour}h, {label.day}d)
+                  {`${label.hour}h | ${label.day}d`}
                 </tspan>
               )}
             </text>

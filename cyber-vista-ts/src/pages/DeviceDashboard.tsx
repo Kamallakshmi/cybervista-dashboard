@@ -113,8 +113,8 @@ const DeviceDashboard = () => {
         <div className="flex items-center gap-2 text-center text-base/6 dark:text-black font-medium text-black">
           Mobile threats lead in volume <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-base/6 text-gray-700">
-          Based on live data from the device threats table
+        <div className="flex items-center text-base/6 text-gray-700">
+          Based on live device threat data
         </div>
       </CardFooter>
     </Card>

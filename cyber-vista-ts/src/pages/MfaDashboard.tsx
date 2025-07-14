@@ -60,7 +60,7 @@ const MFADashboard = () => {
 
   return (
     <Card className="flex flex-col h-full shadow-md bg-gray-50 dark:bg-gray-50 rounded-xl border border-gray-300 dark:border-neutral-700">
-      <CardHeader className="flex flex-col items-start sm:items-center justify-between gap-1 border-b py-5">
+      <CardHeader className="flex flex-col items-center justify-between gap-1 border-b py-5">
         <div className="grid gap-1">
           <Typewriterwidget />
         </div>

@@ -23,7 +23,7 @@ const gradientIconStyle = {
 const DashboardScreen = () => {
   return (
     <>
-      <section className="py-12 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10">
+      <section className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10">
         <div className="flex flex-col space-y-4 items-center justify-center text-center md:text-left">
           <h2 className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-5xl dark:text-neutral-300">
             <span>
@@ -98,7 +98,7 @@ const DashboardScreen = () => {
 
       <DashboardSection
         title="Email Threats"
-        description="Visual breakdown of incoming email threats, including spam, malware, and phishing attempts targeting the system."
+        description="Visual breakdown of email threats, including spam, malware, and phishing attempts targeting systems."
         icon={MailCheck}
       >
         <EmailDashboard />

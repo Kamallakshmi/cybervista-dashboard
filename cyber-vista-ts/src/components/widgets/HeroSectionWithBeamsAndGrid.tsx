@@ -83,7 +83,7 @@ export function HeroSectionWithBeamsAndGrid() {
       </div>
       <div
         ref={containerRef}
-        className="relative mx-auto max-w-7xl rounded-[32px] border border-neutral-300 bg-neutral-700 shadow-md p-2 backdrop-blur-lg md:p-4 dark:border-neutral-700 dark:bg-neutral-800/50"
+        className="relative mx-auto max-w-7xl rounded-[32px] border border-neutral-300 bg-neutral-900 shadow-md p-2 backdrop-blur-lg md:p-4 dark:border-neutral-700 dark:bg-neutral-800/50"
       >
         <div className="rounded-[24px] border border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-black">
           <img
