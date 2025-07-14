@@ -1,0 +1,266 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import DottedMap from "dotted-map";
+
+import { useTheme } from "next-themes";
+
+interface MapProps {
+  dots?: Array<{
+    start: {
+      lat: number;
+      lng: number;
+      label?: string;
+      hour?: number;
+      day?: number;
+    };
+    end: { lat: number; lng: number; label?: string };
+  }>;
+  labels?: Array<{
+    name: string;
+    lat: number;
+    lng: number;
+    hour?: number;
+    day?: number;
+  }>;
+  lineColor?: string;
+}
+export function WorldMap({
+  dots = [],
+  labels = [],
+  lineColor = "#0ea5e9",
+}: MapProps) {
+  const [tooltip, setTooltip] = useState<{
+    x: number;
+    y: number;
+    text: string;
+  } | null>(null);
+
+  const svgRef = useRef<SVGSVGElement>(null);
+  const map = new DottedMap({ height: 100, grid: "diagonal" });
+
+  const { theme } = useTheme();
+
+  const svgMap = map.getSVG({
+    radius: 0.22,
+    color: theme === "dark" ? "#FFFFFF40" : "#00000040",
+    shape: "circle",
+    backgroundColor: theme === "dark" ? "black" : "white",
+  });
+
+  const projectPoint = (lat: number, lng: number) => {
+    const x = (lng + 180) * (800 / 360);
+    const y = (90 - lat) * (400 / 180);
+    return { x, y };
+  };
+
+  const createCurvedPath = (
+    start: { x: number; y: number },
+    end: { x: number; y: number }
+  ) => {
+    const midX = (start.x + end.x) / 2;
+    const midY = Math.min(start.y, end.y) - 50;
+    return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
+  };
+
+  return (
+    <div className="w-full aspect-[2/1] dark:bg-black bg-white rounded-lg  relative font-sans">
+      <img
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
+        className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none"
+        alt="world map"
+        height="495"
+        width="1056"
+        draggable={false}
+      />
+      <svg
+        ref={svgRef}
+        viewBox="0 0 800 400"
+        className="w-full h-full absolute inset-0 pointer-events-none select-none"
+      >
+        {dots.map((dot, i) => {
+          const startPoint = projectPoint(dot.start.lat, dot.start.lng);
+          const endPoint = projectPoint(dot.end.lat, dot.end.lng);
+          return (
+            <g key={`path-group-${i}`}>
+              <motion.path
+                d={createCurvedPath(startPoint, endPoint)}
+                fill="none"
+                stroke="url(#path-gradient)"
+                strokeWidth="1"
+                initial={{
+                  pathLength: 0,
+                }}
+                animate={{
+                  pathLength: 1,
+                }}
+                transition={{
+                  duration: 1,
+                  delay: 0.5 * i,
+                  ease: "easeOut",
+                }}
+                key={`start-upper-${i}`}
+              ></motion.path>
+            </g>
+          );
+        })}
+
+        <defs>
+          <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="white" stopOpacity="0" />
+            <stop offset="5%" stopColor={lineColor} stopOpacity="1" />
+            <stop offset="95%" stopColor={lineColor} stopOpacity="1" />
+            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {dots.map((dot, i) => (
+          <g key={`points-group-${i}`}>
+            <g key={`start-${i}`}>
+              <circle
+                cx={projectPoint(dot.start.lat, dot.start.lng).x}
+                cy={projectPoint(dot.start.lat, dot.start.lng).y}
+                r="2"
+                fill={lineColor}
+                onMouseEnter={() => {
+                  const { x, y } = projectPoint(dot.start.lat, dot.start.lng);
+                  setTooltip({
+                    x,
+                    y,
+                    text: `${dot.start.label?.toUpperCase()}\nHours: ${
+                      dot.start.hour
+                    }, Days: ${dot.start.day}`,
+                  });
+                }}
+                onMouseLeave={() => setTooltip(null)}
+              />
+              <circle
+                cx={projectPoint(dot.start.lat, dot.start.lng).x}
+                cy={projectPoint(dot.start.lat, dot.start.lng).y}
+                r="2"
+                fill={lineColor}
+                opacity="0.5"
+              >
+                <animate
+                  attributeName="r"
+                  from="2"
+                  to="8"
+                  dur="1.5s"
+                  begin="0s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  from="0.5"
+                  to="0"
+                  dur="1.5s"
+                  begin="0s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+            <g key={`end-${i}`}>
+              <circle
+                cx={projectPoint(dot.end.lat, dot.end.lng).x}
+                cy={projectPoint(dot.end.lat, dot.end.lng).y}
+                r="2"
+                fill={lineColor}
+              />
+              <circle
+                cx={projectPoint(dot.end.lat, dot.end.lng).x}
+                cy={projectPoint(dot.end.lat, dot.end.lng).y}
+                r="2"
+                fill={lineColor}
+                opacity="0.5"
+              >
+                <animate
+                  attributeName="r"
+                  from="2"
+                  to="8"
+                  dur="1.5s"
+                  begin="0s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  from="0.5"
+                  to="0"
+                  dur="1.5s"
+                  begin="0s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          </g>
+        ))}
+
+        {labels?.map((label, index) => {
+          const { x, y } = projectPoint(label.lat, label.lng);
+          return (
+            <text
+              key={`label-${index}`}
+              x={x + 6}
+              y={y}
+              fill={theme === "dark" ? "white" : "black"}
+              fontWeight="bold"
+              textAnchor="start"
+            >
+              {/* Country name - font size 10 */}
+              {label.name && (
+                <tspan fontSize="9" dy="0">
+                  {label.name}
+                </tspan>
+              )}
+
+              {/* Hour and Day - font size 8 */}
+              {label.hour && label.day && (
+                <tspan
+                  fontSize="8"
+                  dy="10"
+                  fill={theme === "dark" ? "#cccccc" : "#555"}
+                >
+                  ({label.hour}h, {label.day}d)
+                </tspan>
+              )}
+            </text>
+          );
+        })}
+
+        {(() => {
+          const { x, y } = projectPoint(32.7767, -96.797); // Dallas, TX
+          return (
+            <g key="texas-boy">
+              <image
+                href="https://avatars.githubusercontent.com/u/108535067?v=4"
+                x={x - 12}
+                y={y - 36}
+                width="24"
+                height="24"
+              />
+
+              {/* Speech bubble */}
+              <rect
+                x={x + 15}
+                y={y - 42}
+                width="70"
+                height="20"
+                rx="6"
+                fill={theme === "dark" ? "#1f2937" : "#e5e7eb"}
+                stroke={theme === "dark" ? "#fff" : "#333"}
+              />
+              <text
+                x={x + 20}
+                y={y - 28}
+                fontSize="10"
+                fill={theme === "dark" ? "white" : "black"}
+              >
+                Hi, I’m here!
+              </text>
+            </g>
+          );
+        })()}
+      </svg>
+    </div>
+  );
+}

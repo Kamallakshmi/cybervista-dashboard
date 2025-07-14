@@ -1,15 +1,11 @@
 "use client";
 
+import Loader from "@/components/widgets/Loader";
+import Typewriterwidget from "@/components/widgets/TypeWriterwidget";
 import { useFetcher } from "@/lib/api";
 import { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
+import { Card, CardContent, CardHeader } from "../components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -17,7 +13,6 @@ import {
   type CustomTooltipProps,
 } from "../components/ui/chart";
 import { generateMfaHistory } from "../lib/utils";
-import Loader from "@/components/widgets/Loader";
 
 const chartConfig = {
   "Push Notifications": {
@@ -48,7 +43,6 @@ const MFADashboard = () => {
     !mfaLoading &&
     !mfaError &&
     mfaData &&
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mfaData?.message?.reduce((acc: any, item: any) => {
       acc[item.category] = item.threat_count;
       return acc;
@@ -65,15 +59,14 @@ const MFADashboard = () => {
   }));
 
   return (
-    <Card className="pt-0 mx-6">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b py-5">
+    <Card className="flex flex-col h-full shadow-md bg-gray-50 dark:bg-gray-50 rounded-xl border border-gray-300 dark:border-neutral-700">
+      <CardHeader className="flex flex-col items-start sm:items-center justify-between gap-1 border-b py-5">
         <div className="grid gap-1">
-          <CardTitle>Users with MFA</CardTitle>
-          <CardDescription>{25} Users Enabled MFA</CardDescription>
+          <Typewriterwidget />
         </div>
 
         <select
-          className="border rounded-md px-2 py-1 text-sm bg-white text-gray-700 shadow-sm"
+          className="px-4 py-2 text-sm rounded-lg border border-gray-300 bg-gradient-to-r from-white to-gray-100 text-gray-800 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-150"
           value={range}
           onChange={(e) => setRange(e.target.value)}
         >
@@ -92,21 +85,23 @@ const MFADashboard = () => {
             <AreaChart data={formattedData}>
               <defs>
                 <linearGradient id="fillPush" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="yellow" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="yellow" stopOpacity={0.1} />
+                  <stop offset="5%" stopColor="yellow" stopOpacity={0.1} />
+                  <stop offset="95%" stopColor="yellow" stopOpacity={0.8} />
                 </linearGradient>
+
                 <linearGradient id="fillPhone" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="lime" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="lime" stopOpacity={0.1} />
+                  <stop offset="5%" stopColor="lime" stopOpacity={0.1} />
+                  <stop offset="95%" stopColor="lime" stopOpacity={0.8} />
                 </linearGradient>
+
                 <linearGradient id="fillText" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="red" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="red" stopOpacity={0.1} />
+                  <stop offset="5%" stopColor="red" stopOpacity={0.1} />
+                  <stop offset="95%" stopColor="red" stopOpacity={0.8} />
                 </linearGradient>
               </defs>
 
               <CartesianGrid
-                stroke="#d1d5db" // Tailwind gray-300 (or any lighter gray you want)
+                stroke="#d1d5db"
                 strokeDasharray="3 3"
                 vertical={false}
               />
@@ -117,6 +112,11 @@ const MFADashboard = () => {
                 axisLine={false}
                 tickMargin={8}
                 minTickGap={20}
+                tick={{
+                  fill: "#4B5563",
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}
                 tickFormatter={(value) =>
                   new Date(value).toLocaleDateString("en-US", {
                     month: "short",
@@ -130,14 +130,6 @@ const MFADashboard = () => {
                 content={(props: CustomTooltipProps) => (
                   <ChartTooltipContent {...props} hideIndicator hideLabel />
                 )}
-                // content={ChartTooltipContent({
-                //   labelFormatter: (value) =>
-                //     new Date(value).toLocaleDateString("en-US", {
-                //       month: "short",
-                //       day: "numeric",
-                //     }),
-                //   indicator: "dot",
-                // })}
               />
 
               <Area
@@ -161,10 +153,9 @@ const MFADashboard = () => {
                 stroke="red"
                 stackId="a"
               />
-              {/* <ChartLegend content={<ChartLegendContent />} /> */}
             </AreaChart>
           </ChartContainer>
-          <div className="mt-4 flex justify-center gap-4 text-sm">
+          <div className="mt-4 flex justify-center gap-4 text-sm dark:text-black">
             <div className="flex items-center gap-1">
               <span
                 className="h-2 w-2 rounded-full"

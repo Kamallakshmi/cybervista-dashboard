@@ -32,5 +32,9 @@
       ]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "./src/components/ui/resizable-navbar.tsx",
+    "./src/components/ui/sidebar.tsx"
+  ]
 }

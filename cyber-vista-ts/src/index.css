@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 :root {
+  --color-1: #ff00cc;
+  --color-2: #3333ff;
+  --color-3: #00ffff;
+  --color-4: #00ff99;
+  --color-5: #ffcc00;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -199,5 +205,17 @@ button:focus-visible {
     --chart-3: oklch(0.769 0.188 70.08);
     --chart-4: oklch(0.627 0.265 303.9);
     --chart-5: oklch(0.645 0.246 16.439);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
