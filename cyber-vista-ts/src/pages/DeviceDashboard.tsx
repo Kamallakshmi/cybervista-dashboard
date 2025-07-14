@@ -56,7 +56,7 @@ const DeviceDashboard = () => {
     <Card className="flex flex-col h-full shadow-md bg-gray-50 dark:bg-gray-50 rounded-xl border border-gray-300 dark:border-neutral-700">
       <CardHeader className="items-center">
         <CardTitle className="text-balance text-xl font-semibold text-black md:text-2xl dark:text-black">
-          Device Used
+          Malware Devices
         </CardTitle>
         <CardDescription className="text-base/6 text-gray-700 dark:text-gray-700">
           Real-time data from SQL

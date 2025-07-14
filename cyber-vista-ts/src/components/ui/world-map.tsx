@@ -206,27 +206,107 @@ export function WorldMap({
               fontWeight="bold"
               textAnchor="start"
             >
-              {/* Line 1: Country name */}
+              {/* Country name - font size 10 */}
               {label.name && (
-                <tspan fontSize="10" dy="0">
+                <tspan fontSize="9" dy="0">
                   {label.name}
                 </tspan>
               )}
 
-              {/* Line 2: Hours and Days */}
-              {label.hour != null && label.day != null && (
+              {/* Hour and Day - font size 8 */}
+              {label.hour && label.day && (
                 <tspan
                   fontSize="8"
-                  dy="12"
-                  dx="-50" // shift back slightly if needed
+                  dy="10"
                   fill={theme === "dark" ? "#cccccc" : "#555"}
                 >
-                  {`${label.hour}h | ${label.day}d`}
+                  ({label.hour}h, {label.day}d)
                 </tspan>
               )}
             </text>
           );
         })}
+        {/* Attacker toggle between China and Russia using SVG animate */}
+        {/* Attacker toggling between China and Russia */}
+        {(() => {
+          const china = projectPoint(35.8617, 104.1954);
+          const russia = projectPoint(61.524, 105.3188);
+          const germany = projectPoint(51.1657, 10.4515);
+          const pakistan = projectPoint(30.3753, 69.3451);
+          const india = projectPoint(12.9716, 77.5946);
+
+          const attackerImg =
+            "https://media.licdn.com/dms/image/v2/D4E03AQHb2l13JVAR0Q/profile-displayphoto-shrink_800_800/B4EZUHCxsUHgAc-/0/1739579926089?e=1758153600&v=beta&t=ollDhtcu0JyipVtQlxfjqILVKirSoLPnA0MQSu5qP9U";
+
+          const countries = [
+            { key: "china", point: china },
+            { key: "russia", point: russia },
+            { key: "germany", point: germany },
+            { key: "pakistan", point: pakistan },
+            { key: "india", point: india },
+          ];
+
+          return (
+            <>
+              {countries.map((country, index) => {
+                const visibleStart = (index * 0.2).toFixed(2);
+                const visibleEnd = ((index + 1) * 0.2).toFixed(2);
+
+                return (
+                  <g key={`attacker-${country.key}`}>
+                    <image
+                      href={attackerImg}
+                      x={country.point.x - 12}
+                      y={country.point.y - 36}
+                      width="24"
+                      height="24"
+                    >
+                      <animate
+                        attributeName="opacity"
+                        values="0;0;1;1;0;0"
+                        keyTimes={`0;${visibleStart};${visibleStart};${visibleEnd};${visibleEnd};1`}
+                        dur="35s"
+                        repeatCount="indefinite"
+                      />
+                    </image>
+                    <rect
+                      x={country.point.x + 15}
+                      y={country.point.y - 42}
+                      width="80"
+                      height="20"
+                      rx="6"
+                      fill={theme === "dark" ? "#1f2937" : "#e5e7eb"}
+                      stroke={theme === "dark" ? "#fff" : "#333"}
+                    >
+                      <animate
+                        attributeName="opacity"
+                        values="0;0;1;1;0;0"
+                        keyTimes={`0;${visibleStart};${visibleStart};${visibleEnd};${visibleEnd};1`}
+                        dur="35s"
+                        repeatCount="indefinite"
+                      />
+                    </rect>
+                    <text
+                      x={country.point.x + 18}
+                      y={country.point.y - 28}
+                      fontSize="10"
+                      fill={theme === "dark" ? "white" : "black"}
+                    >
+                      I'm watching 👀
+                      <animate
+                        attributeName="opacity"
+                        values="0;0;1;1;0;0"
+                        keyTimes={`0;${visibleStart};${visibleStart};${visibleEnd};${visibleEnd};1`}
+                        dur="35s"
+                        repeatCount="indefinite"
+                      />
+                    </text>
+                  </g>
+                );
+              })}
+            </>
+          );
+        })()}
 
         {(() => {
           const { x, y } = projectPoint(32.7767, -96.797); // Dallas, TX
@@ -244,7 +324,7 @@ export function WorldMap({
               <rect
                 x={x + 15}
                 y={y - 42}
-                width="70"
+                width="73"
                 height="20"
                 rx="6"
                 fill={theme === "dark" ? "#1f2937" : "#e5e7eb"}
@@ -256,7 +336,7 @@ export function WorldMap({
                 fontSize="10"
                 fill={theme === "dark" ? "white" : "black"}
               >
-                Hi, I’m here!
+                Staying safe🛡️
               </text>
             </g>
           );
