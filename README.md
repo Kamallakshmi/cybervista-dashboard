@@ -124,6 +124,7 @@ The CyberVista Dashboard was created as part of a front-end evaluation to showca
 - **Grid System** enables clarity and responsiveness.
 - **Whitespace Management** only SQL-backed data is visualized—no filler content.
 - **Animations** enhance interactivity while maintaining performance.
+- **Fully Responsive Design** ensures seamless experience across all devices, from desktops to mobile screens.
 
 ---
 
