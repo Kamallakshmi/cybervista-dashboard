@@ -23,9 +23,15 @@ const gradientIconStyle = {
 const DashboardScreen = () => {
   return (
     <>
-      <section className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10">
+      <section
+        className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10"
+        aria-labelledby="mfa-heading"
+      >
         <div className="flex flex-col space-y-4 items-center justify-center text-center md:text-left">
-          <h2 className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-5xl dark:text-neutral-300">
+          <h2
+            id="mfa-heading"
+            className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-5xl dark:text-neutral-300"
+          >
             <span>
               <ShieldCheck size={28} className="mt-1" stroke="url(#gradient)" />
               <svg width="0" height="0">
@@ -60,9 +66,15 @@ const DashboardScreen = () => {
         </div>
       </section>
 
-      <section className="py-12 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10">
+      <section
+        className="py-12 px-4 max-w-7xl mx-auto grid grid-cols-1 items-center gap-10"
+        aria-labelledby="login-heading"
+      >
         <div className="flex flex-col space-y-4 items-center justify-center text-center md:text-left">
-          <h2 className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-5xl dark:text-neutral-300">
+          <h2
+            id="login-heading"
+            className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-5xl dark:text-neutral-300"
+          >
             <span>
               <LogIn size={28} className="mt-1" stroke="url(#gradient)" />
               <svg width="0" height="0">

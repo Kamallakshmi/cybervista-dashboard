@@ -20,9 +20,15 @@ export default function DashboardSection({
   icon: React.ElementType;
 }) {
   return (
-    <section className="py-12 px-4 max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-10">
+    <section
+      className="py-12 px-4 max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-10"
+      aria-labelledby="email-heading"
+    >
       <div className="flex flex-col space-y-4 md:items-start items-center justify-center text-center md:text-left">
-        <h2 className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-4xl dark:text-neutral-300">
+        <h2
+          id="email-heading"
+          className="flex items-center gap-2 text-balance text-center text-3xl font-semibold tracking-tight text-black md:text-4xl dark:text-neutral-300"
+        >
           <span className="inline-flex items-center" style={gradientTextStyle}>
             <svg width="0" height="0">
               <defs>
