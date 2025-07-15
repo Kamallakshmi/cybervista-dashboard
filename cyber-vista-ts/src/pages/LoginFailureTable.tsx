@@ -129,7 +129,7 @@ const LoginFailureTable = ({ showTable = true }: Props) => {
                       )
                     }
                   >
-                    <td className="px-4 py-3 text-[#2B7FFF] font-medium">
+                    <td className="px-4 py-3 text-blue-600 font-medium">
                       {entry.user}
                     </td>
                     <td className="px-4 py-4 dark:text-black">{entry.jan}</td>
